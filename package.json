@@ -1,0 +1,48 @@
+{
+  "name": "tip-calc",
+  "version": "0.0.3",
+  "description": "Toolset to calculate the tip based on the total amount, people and tip-rate. Includes the Tip-Calc, a calculator and a currency converter.",
+  "productName": "Tip-Calculator Toolset",
+  "author": "ZHENG Robert",
+  "startDate": "2021",
+  "private": true,
+  "scripts": {
+    "start": "quasar dev",
+    "devpwa": "quasar dev -m pwa",
+    "buildpwa": "quasar build -m pwa",
+    "icons": "icongenie generate -i tipcalc-512x512.png --skip-trim --theme-color ffffff",
+    "lint": "eslint --ext .js,.vue ./",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.0.0",
+    "core-js": "^3.6.5",
+    "mathjs": "^9.5.0",
+    "quasar": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.13.14",
+    "@quasar/app": "^3.0.0",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^7.0.0",
+    "eslint-webpack-plugin": "^2.4.0",
+    "workbox-webpack-plugin": "^6.3.0"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 12.22.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
