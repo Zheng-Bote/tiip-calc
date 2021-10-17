@@ -13,9 +13,9 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
+      <q-item-label>{{ $t(title) }}</q-item-label>
       <q-item-label caption>
-        {{ caption }}
+        {{ $t(caption) }}
       </q-item-label>
     </q-item-section>
   </q-item>
@@ -46,6 +46,36 @@ export default defineComponent({
       type: String,
       default: ''
     }
-  }
+  },
+
+  i18n: {
+    messages:{
+      "en": {
+        "Tip-Calc": "Tip-Calc",
+        "Tip-Calculator": "Tip-Calculator",
+        "Calc": "Calculator",
+        "Calculator": "simple Calculator",
+        "Currency": "Currency",
+        "Currency_Converter": "Currency Converter",
+        "Imprint": "Imprint",
+        "Imprint_Contact": "Imprint & Contact",
+        "Tip-Calc_Github": "Tip-Calc on Github",
+        "Homebase": "Mainpage",
+      },
+      "de": {
+        "Tip-Calc": "Tip-Calc",
+        "Tip-Calculator": "Trinkgeld-Rechner",
+        "Calc": "Rechner",
+        "Calculator": "einfacher Rechner",
+        "Currency": "Währung",
+        "Currency_Converter": "Währungs-Umrechner",
+        "Imprint": "Impressum",
+        "Imprint_Contact": "Impressum & Kontakt",
+        "Tip-Calc_Github": "Tip-Calc auf Github",
+        "Homebase": "Hauptseite",
+      }
+    }
+  },
 })
 </script>
+

@@ -1,6 +1,6 @@
 {
   "name": "tip-calc",
-  "version": "0.0.3",
+  "version": "0.2.0",
   "description": "Toolset to calculate the tip based on the total amount, people and tip-rate. Includes the Tip-Calc, a calculator and a currency converter.",
   "productName": "Tip-Calculator Toolset",
   "author": "ZHENG Robert",
@@ -10,15 +10,20 @@
     "start": "quasar dev",
     "devpwa": "quasar dev -m pwa",
     "buildpwa": "quasar build -m pwa",
+    "deploy_ghpage": "sh deploy.sh",
+    "deploy_gh": "git commit -m 'init' & git push -u origin master",
     "icons": "icongenie generate -i tipcalc-512x512.png --skip-trim --theme-color ffffff",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@intlify/vue-i18n-loader": "^3.2.0",
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
     "mathjs": "^9.5.0",
-    "quasar": "^2.0.0"
+    "quasar": "^2.0.0",
+    "vue-i18n": "^9.2.0-beta.12",
+    "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",

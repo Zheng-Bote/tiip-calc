@@ -9,7 +9,7 @@
         switch-toggle-side
         expand-separator
         icon="help_outline"
-        :label="name"
+        :label="$t('Calculator')"
         :caption="version"
       >
         <q-card>
@@ -18,9 +18,10 @@
               &copy; {{ getYear() }} {{ author }}
             </p>
             <p class="text-body2">
-              &rArr; simple calculator, far away to be perfect.
-              <br/>
-              &rArr; offline-capable
+              {{ $t('app_desc') }}
+            </p>
+            <p class="text-body2">
+              &rArr; {{ $t('offline-capable') }}
             </p>
           </q-card-section>
         </q-card>
@@ -33,14 +34,14 @@
     <form submit.prevent>
       <div class="button-grid">
         <button
-          title="Clear everything "
+          :title="$t('Clear everything')"
           class="calc-button two-span"
           @click.stop="expression = ''"
         >
           C
         </button>
         <button
-          title="Clear entry"
+          :title="$t('Clear entry')"
           class="calc-button"
           @click.stop="expression = expression.substring(0, expression.length -1)"
         >
@@ -62,7 +63,7 @@
         <button title="Number zero" class="calc-button" @click.stop="expression += '0'">0</button>
         <button title="Decimal Point" class="calc-button" @click.stop="expression += '.'">.</button>
         <button title="Percentage" class="calc-button" @click.stop="expression += '%'">%</button>
-        <button title="Calculate" class="calc-button" type="submit" @click="calculate">=</button>
+        <button :title="$t('Calculate')" class="calc-button" type="submit" @click="calculate">=</button>
       </div>
     </form>
   </div>
@@ -75,6 +76,27 @@ import DateTimes from '../services/DateTimes.js';
 
 export default {
   name: "Calculator",
+
+    i18n: {
+    messages:{
+      "en": {
+        "Calculator": "Calculator",
+        "offline-capable": "offline-capable",
+        "app_desc": "simple calculator, far away to be perfect.",
+        "Clear everything": "Clear everything",
+        "Clear entry": "Clear entry",
+        "Calculate": "calculate",
+      },
+      "de": {
+        "Calculator": "Rechner",
+        "offline-capable": "offline-fähig",
+        "app_desc": "einfacher Rechner.",
+        "Clear everything": "alles löschen",
+        "Clear entry": "Eingabe löschen",
+        "Calculate": "berechne",
+      }
+    }
+  },
 
   data() {
     return {

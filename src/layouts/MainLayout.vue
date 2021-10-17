@@ -4,10 +4,10 @@
       <q-toolbar>
         <q-img
           alt="Tip-Calc logo"
-          src="/icons/favicon-96x96.png"
+          src="https://bamboo-net.de/tip-calc/icons/favicon-96x96.png"
           style="width: 30px; height: 30px;"
           title="Hauptseite"
-          @click="goTo('#/tip-calc/')"
+          @click="goTo('https://bamboo-net.de/tip-calc')"
         />
         <q-btn
           class="desktop-only"
@@ -22,26 +22,63 @@
         <q-toolbar-title>
           Tip-Calc Tool
         </q-toolbar-title>
+
         <q-icon
           v-if="!isOnline"
           name="cloud_off"
           class="q-px-sm"
           color="red"
+          title="offline"
         />
         <q-icon
           v-else
           name="cloud_on"
           class="q-px-sm"
           color="green"
+          title="online"
         />
 
         <q-btn
+          v-if="$i18n.locale === 'en'"
+          flat
+          dense
+          round
+          icon="img:https://bamboo-net.de/tip-calc/img/de_flag.svg"
+          aria-label="lang"
+          @click="setLocale()"
+          title="zu Deutsch wechseln"
+        />
+        <q-btn
+          v-else
+          flat
+          dense
+          round
+          icon="img:https://bamboo-net.de/tip-calc/img/gb_flag.svg"
+          aria-label="lang"
+          @click="setLocale()"
+          title="change to English"
+        />
+        &nbsp;
+
+        <q-btn
+          v-if="$i18n.locale === 'en'"
           flat
           dense
           round
           icon="settings_brightness"
           aria-label="Mode"
           @click="toggleMode"
+          title="toggle dark/light mode"
+        />
+        <q-btn
+          v-else
+          flat
+          dense
+          round
+          icon="settings_brightness"
+          aria-label="Mode"
+          @click="toggleMode"
+          title="wechsel dunkel/hell Modus"
         />
 
       </q-toolbar>
@@ -62,7 +99,7 @@
           Essential Links
         </q-item-label> -->
 
-        <p><br/></p>
+        <p><br/><br/></p>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -131,7 +168,7 @@
 
         <q-img
           alt="Tip-Calc logo"
-          src="/icons/favicon-96x96.png"
+          src="https://bamboo-net.de/tip-calc/icons/favicon-96x96.png"
           style="width: 25px; height: 25px;"
         />
         </q-route-tab>
@@ -169,27 +206,18 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import { defineComponent, ref } from 'vue'
+import { useQuasar } from 'quasar'
+import Locales from '../services/Locales.js';
 
 // Initialize deferredPrompt for use later to show browser install prompt.
 let deferredPrompt;
 
 const linksList = [
   {
-    title: 'Homepage',
-    caption: 'Homebase of Tip-Calc',
-    icon: 'foundation',
-    link: 'https://bamboo-net.de/'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-   {
     title: 'Tip-Calc',
     caption: 'Tip-Calculator',
-    icon: 'img:/icons/favicon-96x96.png',
+    icon: 'img:https://bamboo-net.de/tip-calc/icons/favicon-96x96.png',
     link: '#/tipcalc'
   },
   {
@@ -200,14 +228,30 @@ const linksList = [
   },
   {
     title: 'Currency',
-    caption: 'Currency Converter',
+    caption: 'Currency_Converter',
     icon: 'paid',
     link: '#/currency'
-  }
+  },
+  {
+    title: 'Imprint',
+    caption: 'Imprint_Contact',
+    icon: 'local_police',
+    link: '#/impressum'
+  },
+  {
+    title: 'Github',
+    caption: 'Tip-Calc_Github',
+    icon: 'code',
+    link: 'https://github.com/Zheng-Bote/tip-calc/'
+  },
+  {
+    title: 'Homepage',
+    caption: 'Homebase',
+    icon: 'foundation',
+    link: 'https://bamboo-net.de/'
+  },
 ];
 
-import { defineComponent, ref } from 'vue'
-import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -215,9 +259,15 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
+
+  created() {
+      const lang = this.getLocale();
+      (lang === 'de') ? this.$i18n.locale = 'de' : this.$i18n.locale = 'en';
+  },
+
   methods: {
     goTo(val) {
-      window.location.assign(`/#/${val}`);
+      window.location.assign(val);
     },
     installApp() {
       // Hide the app provided install promotion
@@ -239,7 +289,14 @@ export default defineComponent({
      },
      updateOnlineStatus() {
        navigator.onLine ? this.isOnline = true : this.isOnline = false;
-     }
+     },
+    getLocale() {
+      const myLocale = new Locales();
+      return myLocale.getLocale();
+    },
+    setLocale() {
+      (this.$i18n.locale === 'en') ? this.$i18n.locale = 'de' : this.$i18n.locale = 'en';
+    },
   },
   data () {
     const leftDrawerOpen = ref(false)
@@ -247,6 +304,7 @@ export default defineComponent({
     const $q = useQuasar()
 
     return {
+
       essentialLinks: linksList,
       leftDrawerOpen,miniState,
       toggleLeftDrawer () {

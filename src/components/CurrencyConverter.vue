@@ -1,6 +1,6 @@
 <template>
 
-<div>{{ getIntlDateTime }}</div>
+<div  class="text-caption">{{ getIntlDateTime }}</div>
 
   <div class="q-pa-md center container">
     <q-list bordered class="rounded-borders">
@@ -11,7 +11,7 @@
         switch-toggle-side
         expand-separator
         icon="help_outline"
-        :label="name"
+        :label="$t('Currency_Converter')"
         :caption="version"
       >
         <q-card>
@@ -20,11 +20,12 @@
               &copy; {{ getYear() }} {{ author }}
             </p>
             <p class="text-body2">
-              &rArr; converts the given amount and chosen currency to several currencies.
+              {{ $t('app_desc') }}
+            </p>
+            <p class="text-body2">
+              &rArr; {{ $t('offline-capable') }}
               <br/>
-              &rArr; offline-capable
-              <br/>
-              &rArr; the rates are called up when an online query is made and saved locally for future offline use.
+              &rArr; {{ $t('app_func') }}
             </p>
           </q-card-section>
         </q-card>
@@ -35,17 +36,17 @@
     <form @submit.prevent="convert">
 
       <fieldset class="in">
-        <legend>&nbsp;to convert&nbsp;</legend>
-        <q-input type="number" outlined label="Amount" v-model.number="amount" @focus="converted = false"/>
-        <q-select label="Currency" outlined :options="currencies" v-model="fromCurrency">
+        <legend>&nbsp;{{ $t('to convert') }}&nbsp;</legend>
+        <q-input type="number" outlined :label="$t('Amount')" v-model.number="amount" @focus="converted = false"/>
+        <q-select :label="$t('Currency')" outlined :options="currencies" v-model="fromCurrency">
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section avatar>
-                <q-icon :name="scope.opt.icon" />
+                <q-icon :name="$t(scope.opt.icon)" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ scope.opt.label }}</q-item-label>
-                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+                <q-item-label>{{ $t(scope.opt.label) }}</q-item-label>
+                <q-item-label caption>{{ $t(scope.opt.description) }}</q-item-label>
               </q-item-section>
             </q-item>
           </template>
@@ -56,7 +57,7 @@
         type="submit"
         outline
         color="primary"
-        label="convert"
+        :label="$t('convert')"
       />
 
     </form>
@@ -94,15 +95,15 @@
 
   <div v-if="converted" class="center">
     <fieldset class="out">
-      <legend>&nbsp;converted&nbsp;</legend>
+      <legend>&nbsp;{{ $t('converted') }}&nbsp;</legend>
 
       <!-- <q-input outlined :label="'amount in ' + fromCurrency.label" :model-value="amount.toFixed(2)"/> -->
-      <q-input outlined :input-style="{ textAlign: 'right' }" :label="'exchange rate date'" :model-value="rates['date']"/>
+      <q-input outlined :input-style="{ textAlign: 'right' }" :label="$t('exchange rate date')" :model-value="rates['date']"/>
 
       <br/>
       <div v-for="currency of currencies" :key="currency.label">
-        <q-input outlined :input-style="{ textAlign: 'right' }" :label="currency.label" :model-value="(amount * rates[currency.value]).toFixed(2)"/>
-        <p class="text-caption">rate: {{ rates[currency.value] || 1}}</p>
+        <q-input outlined :input-style="{ textAlign: 'right' }" :label="$t(currency.label)" :model-value="(amount * rates[currency.value]).toFixed(2)"/>
+        <p class="text-caption">{{ $t('rate') }}: {{ rates[currency.value] || 1}}</p>
       </div>
     </fieldset>
   </div>
@@ -116,6 +117,49 @@ import DateTimes from '../services/DateTimes.js';
 export default {
   name: "CurrencyConverter",
 
+  i18n: {
+    messages:{
+      "en": {
+        "Currency_Converter": "Currency Converter",
+        "offline-capable": "offline-capable",
+        "app_desc": "App to calculate the tip based on the total amount, amount of people sharing the bill and tip-rate.",
+        "app_func": "the rates are called up when an online query is made and saved locally for future offline use.",
+        "to convert": "to convert",
+        "Amount": "Amount",
+        "Currency": "Currency",
+        "convert": "convert",
+        "converted": "converted",
+        "exchange rate date": "exchange rate date",
+        "European EURO": "European EURO",
+        "Chinese Yuan": "Chinese Yuan",
+        "Chinese Renminbi": "chinesischer Renminbi",
+        "Russian Ruble": "Russian Ruble",
+        "Japanese Yen": "Japanese Yen",
+        "whithout GBP": "whithout GBP",
+        "rate": "rate",
+      },
+      "de": {
+        "Currency_Converter": "Währungs-Umrechner",
+        "offline-capable": "offline-fähig",
+        "app_desc": "Applikation zur Berechnung von Trinkgeldern auf Basis der Personen die sich die Rechnung teilen und auf Basis der Service-Beurteilung.",
+        "app_func": "die Währungsrate wird aktualisiert wenn eine Online-Abfrage erfolgt und wird dann lokal gespeichert für künftige Offline-Nutzung.",
+        "to convert": "Umrechnung",
+        "Amount": "Betrag",
+        "Currency": "Währung",
+        "convert": "umrechnen",
+        "converted": "Umrechnung",
+        "exchange rate date": "Währungskurs Datum",
+        "European EURO": "europäischer EURO",
+        "Chinese Yuan": "chinesischer Yuan",
+        "Chinese Renminbi": "chinesischer Renminbi",
+        "Russian Ruble": "russischer Rubel",
+        "Japanese Yen": "japanischer Yen",
+        "whithout GBP": "ohne Pfund",
+        "rate": "Kurs",
+      }
+    }
+  },
+
   data() {
     return {
       name: "Currency Converter",
@@ -127,11 +171,11 @@ export default {
       fromCurrency: "",
       toCurrency: "",
       currencies: [
-        {index: 0, label: "European EURO", value:"EUR", description: 'whithout GBP', icon: 'img:/img/german_flag.svg', rate: ''},
-        {index: 1, label: "Chinese Yuan", value:"CNY", description: 'Chinese Renminbi', icon: 'img:/img/china_flag.svg', rate: ''},
-        {index: 2, label: "US Dollar", value:"USD", description: '', icon: 'img:/img/usa_flag.svg', rate: ''},
-        {index: 3, label: "Russian Ruble", value:"RUB", description: '', icon: 'img:/img/russia_flag.svg', rate: ''},
-        {index: 4, label: "Japanese Yen", value:"JPY", description: '', icon: 'img:/img/japan_flag.svg', rate: ''},
+        {index: 0, label: "European EURO", value:"EUR", description: 'whithout GBP', icon: 'img:https://bamboo-net.de/tip-calc/img/de_flag.svg', rate: ''},
+        {index: 1, label: "Chinese Yuan", value:"CNY", description: 'Chinese Renminbi', icon: 'img:https://bamboo-net.de/tip-calc/img/cn_flag.svg', rate: ''},
+        {index: 2, label: "US Dollar", value:"USD", description: '', icon: 'img:https://bamboo-net.de/tip-calc/img/us_flag.svg', rate: ''},
+        {index: 3, label: "Russian Ruble", value:"RUB", description: '', icon: 'img:https://bamboo-net.de/tip-calc/img/ru_flag.svg', rate: ''},
+        {index: 4, label: "Japanese Yen", value:"JPY", description: '', icon: 'img:https://bamboo-net.de/tip-calc/img/jp_flag.svg', rate: ''},
       ],
       rated: [
         {index: 0, rated: ''},
@@ -265,7 +309,7 @@ button {
 }
 
 fieldset {
-  width: fit-content;
+  width: 300px;
   border-radius: 5px;
   border-color: $primary;
 }

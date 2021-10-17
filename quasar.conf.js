@@ -21,7 +21,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
-    boot: [],
+    boot: ["i18n"],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.scss"],
@@ -66,6 +66,15 @@ module.exports = configure(function (ctx) {
         chain
           .plugin("eslint-webpack-plugin")
           .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+      },
+      chainWebpack: (config) => {
+        config.module
+          .rule("i18n")
+          .resourceQuery(/blockType=i18n/)
+          .type("javascript/auto")
+          .use("i18n")
+          .loader("@intlify/vue-i18n-loader")
+          .end();
       },
     },
 

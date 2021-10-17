@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
+
+git config user.email "zheng.bote@gmail.com"
+git config user.name "Zheng-Bote"
+
 # abort on errors
 set -e
 # build
@@ -10,6 +14,6 @@ cd dist/pwa/
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@github.com:username/hello-world.git master:gh-pages
+git push -f git@github.com:Zheng-Bote/tip-calc.git master:gh-pages
 cd -
 

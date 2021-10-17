@@ -1,5 +1,4 @@
 <template>
-
   <div class="q-pa-md center container">
     <q-list bordered class="rounded-borders">
       <q-expansion-item
@@ -9,7 +8,7 @@
         switch-toggle-side
         expand-separator
         icon="help_outline"
-        :label="name"
+        :label="$t('tipcalc.app_name')"
         :caption="version"
       >
         <q-card>
@@ -18,9 +17,9 @@
               &copy; {{ getYear() }} {{ author }}
             </p>
             <p class="text-body2">
-              &rArr; calculate the tip based on bill, number of people sharing the bill and the tip-rating.
+              &rArr; {{ $t('tipcalc.app_desc') }}
               <br/>
-              &rArr; offline-capable
+              &rArr; {{ $t('tipcalc.offline_capable') }}
             </p>
           </q-card-section>
         </q-card>
@@ -31,12 +30,12 @@
     <form @submit.prevent="calculate">
 
       <fieldset class="in">
-        <legend>&nbsp;Dinner&nbsp;</legend>
+        <legend>&nbsp;{{ $t('tipcalc.Dinner') }}&nbsp;</legend>
 
-        <q-input outlined :label="'bill amount'" v-model="tip.subtotal" @focus="calculated = false"/>
-        <q-input outlined :label="'number of people sharing the bill'" type="number" v-model.number="tip.numDinners" @focus="calculated = false"/>
+        <q-input outlined :label="$t('tipcalc.bill_amount')" v-model="tip.subtotal" @focus="calculated = false"/>
+        <q-input outlined :label="$t('tipcalc.number_of_people')" type="number" v-model.number="tip.numDinners" @focus="calculated = false"/>
 
-        <q-select label="rating and tip percentage" outlined :options="ratings" emit-value v-model.number="tip.tipPercentage" @focus="calculated = false">
+        <q-select :label="$t('tipcalc.rating_tippercentage')" outlined :options="ratings" emit-value v-model.number="tip.tipPercentage" @focus="calculated = false">
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section avatar>
@@ -44,7 +43,7 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ scope.opt.label }}</q-item-label>
-                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+                <q-item-label caption>{{ $t(scope.opt.description) }}</q-item-label>
               </q-item-section>
             </q-item>
           </template>
@@ -56,19 +55,19 @@
         type="submit"
         outline
         color="primary"
-        label="calculate"
+        :label="$t('tipcalc.calculate')"
       />
 
     </form>
   </div>
   <div v-if="calculated" class="center">
     <fieldset class="out">
-      <legend>&nbsp;Payment&nbsp;</legend>
+      <legend>&nbsp;{{ $t('tipcalc.Payment') }}&nbsp;</legend>
 
-      <q-input outlined :input-style="{ textAlign: 'right' }" :label="'tip'" :model-value="result.tip"/>
-      <q-input outlined :input-style="{ textAlign: 'right', fontWeight: 'bold' }" :label="'total dinner'" :model-value="result.total"/>
-      <q-input outlined :input-style="{ textAlign: 'right'}" :label="'tip per dinner'" :model-value="result.tipPerDiner"/>
-      <q-input outlined :input-style="{ textAlign: 'right', fontWeight: 'bold' }" :label="'total per dinner'" :model-value="result.totalPerDiner"/>
+      <q-input outlined :input-style="{ textAlign: 'right' }" :label="$t('tipcalc.tip')" :model-value="result.tip"/>
+      <q-input outlined :input-style="{ textAlign: 'right', fontWeight: 'bold' }" :label="$t('tipcalc.total_dinner')" :model-value="result.total"/>
+      <q-input outlined :input-style="{ textAlign: 'right'}" :label="$t('tipcalc.tip_per_dinner')" :model-value="result.tipPerDiner"/>
+      <q-input outlined :input-style="{ textAlign: 'right', fontWeight: 'bold' }" :label="$t('tipcalc.total_per_dinner')" :model-value="result.totalPerDiner"/>
 
     </fieldset>
   </div>
@@ -78,9 +77,14 @@
 <script>
 
 import DateTimes from '../services/DateTimes.js';
+import commonMessages from "../i18n/TipCalc_i18n.js";
 
 export default {
   name: "tipCalculator",
+
+  i18n: {
+    sharedMessages: commonMessages
+  },
 
   data() {
     return {
@@ -193,9 +197,12 @@ button {
 .result {
   font-weight: bold;
 }
-
+/*
+form {
+  width: 100%;
+}*/
 fieldset {
-  width: fit-content;
+  width: 300px;
   border-radius: 5px;
   border-color: $primary;
 }
@@ -208,6 +215,10 @@ fieldset {
   .container {
     max-width: 500px;
   }
+  /*
+  form {
+    width: 300px;
+  }*/
   fieldset {
     width: 500px;
   }
