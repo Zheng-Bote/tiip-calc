@@ -14,6 +14,6 @@ PWA Toolset to calculate the tip based on the total amount, amount of people sha
 * 3 apps in 1: Tip-Calc, Calculator, Currency-Converter
 
 
-[Tip-Calc Demo-Page](https://zheng-bote.github.io/tip-calc/)
+[Tip-Calc Website](https://www.hase-zheng.net/tip-calc/)
 
 => see also Tip-Calc Wiki
